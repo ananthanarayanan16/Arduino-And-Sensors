@@ -1,18 +1,34 @@
-int analogpin = A0;
+//READ VOLTAGE VALUE USE POTENTIOMETER
 
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
+const int analogpin = A0;
+
+int sensordigitalvalue = 0;
+
+float sensorvoltagevalue = 0.0;
+
+void setup()
+{
+    //  INITIALIZE SERIAL COMMUNUCATION 
+
+    Serial.begin(9600);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  int digitalvalue = analogRead(analogpin);
-  float analogvalue = (digitalvalue*5.0)/1023;
-  Serial.print("Digital Value : ");
-  Serial.print(digitalvalue);
-  Serial.print("\t Voltage Value : ");
-  Serial.println(analogvalue);
+void loop()
+{
+//   READ ANALOG VALUE
 
-  delay(200);
+    sensordigitalvalue = analogRead(analogpin);
+
+    sensorvoltagevalue = (sensordigitalvalue * 5.0) / 1023;
+
+    Serial.print("Digital Value = ");
+    
+    Serial.print(sensordigitalvalue);
+    
+    Serial.print("\t Voltage Value = ");
+
+    Serial.println(sensorvoltagevalue);
+
+    delay(500);
+    
 }
