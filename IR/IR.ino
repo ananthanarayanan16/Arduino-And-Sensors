@@ -12,7 +12,7 @@ void loop() {
   // Read the state of the IR sensor
   int obstacleDetected = digitalRead(irSensorPin);
 
-  if(obstacleDetected == HIGH)
+  if(obstacleDetected == LOW)
   {
     digitalWrite(buzz,HIGH);
     Serial.println("Object detected.");
