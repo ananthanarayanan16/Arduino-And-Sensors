@@ -6,38 +6,78 @@ const int echoPin = 6;
 
 long duration;
 int distance;
+
 Servo myServo; 
-void setup() {
+
+void setup() 
+{
   pinMode(trigPin, OUTPUT); 
   pinMode(echoPin, INPUT); 
   Serial.begin(9600);
   myServo.attach(12); 
 }
-void loop() {
+
+void loop() 
+{
   
-  for(int i=15;i<=165;i++){  
-  myServo.write(i);
-  delay(30);
-  distance = calculateDistance();
-  
-  Serial.print(i); 
-  Serial.print(","); 
-  Serial.print(distance); 
-  Serial.print("."); 
+  for(int i = 0; i <= 180; i++)
+  {
+    myServo.write(i);
+    distance = calculateDistance();
+
+    if(distance < 50)
+    {
+      Serial.print("OBJECT DETECTED, ");
+      Serial.print("ANGLE : ");
+      Serial.print(i); 
+      Serial.print(" degree");
+      Serial.print(",  DISTANCE : "); 
+      Serial.print(distance); 
+      Serial.println(" cm.");
+      delay(300);
+    }
+    else
+    {
+      Serial.print("OBJECT CANNOT DETECTED, ");
+      Serial.print("ANGLE : ");
+      Serial.print(i);
+      Serial.println(" degree");
+      delay(300);
+    }
   }
 
-  for(int i=165;i>15;i--){  
-  myServo.write(i);
-  delay(30);
-  distance = calculateDistance();
-  Serial.print(i);
-  Serial.print(",");
-  Serial.print(distance);
-  Serial.print(".");
+  for(int i = 180; i >= 0; i--)
+  {
+    myServo.write(i);
+    distance = calculateDistance();
+
+    if(distance < 50)
+    {
+      Serial.print("OBJECT DETECTED, ");
+      Serial.print("ANGLE : ");
+      Serial.print(i);
+      Serial.print(" degree");
+      Serial.print(",  DISTANCE : ");
+      Serial.print(distance);
+      Serial.println(" cm.");
+      delay(300);
+    }
+    else
+    {
+      Serial.print("OBJECT CANNOT DETECTED, ");
+      Serial.print("ANGLE : ");
+      Serial.print(i);
+      Serial.println(" degree");
+      delay(300);
+    }
   }
+  
+  delay(1000);
+
 }
 
-int calculateDistance(){ 
+int calculateDistance()
+{ 
   
   digitalWrite(trigPin, LOW); 
   delayMicroseconds(2);
@@ -45,7 +85,9 @@ int calculateDistance(){
   digitalWrite(trigPin, HIGH); 
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
+
   duration = pulseIn(echoPin, HIGH); 
   distance= duration*0.034/2;
+  
   return distance;
 }
